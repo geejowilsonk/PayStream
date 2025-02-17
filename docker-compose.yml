@@ -12,20 +12,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  user-service:
-    build: .
-    container_name: paystream-user-service
-    restart: always
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://paystream-db:5432/paystreamdb
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-    ports:
-      - "8080:8080"
+      - postgres_data:/var/lib/postgresql/data"
 
 volumes:
   postgres_data:

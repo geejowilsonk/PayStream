@@ -1,0 +1,6 @@
+apiVersion: v2
+name: paystream
+description: A Helm chart for deploying PayStream
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

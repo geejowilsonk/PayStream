@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paystream-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paystream-db
+  template:
+    metadata:
+      labels:
+        app: paystream-db
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.postgres.image }}:{{ .Values.postgres.tag }}"
+          env:
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgres.env.POSTGRES_DB }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgres.env.POSTGRES_USER }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgres.env.POSTGRES_PASSWORD }}"
+          ports:
+            - containerPort: 5432

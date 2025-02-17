@@ -12,19 +12,18 @@ import lombok.*;
 public class User {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment ID
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(nullable = false, unique = true)
+        @Column // No constraints
         private String username;
 
-        @Column(nullable = false)
+        @Column // No constraints
         private String password;
 
-        @Column(nullable = false)
+        @Column // No constraints
         private String role;
 
-        // ✅ Correct constructor (no 'id' assignment)
         public User(String username, String password, String role) {
                 this.username = username;
                 this.password = password;

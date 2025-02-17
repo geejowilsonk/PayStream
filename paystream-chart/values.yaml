@@ -1,0 +1,51 @@
+replicaCount: 1
+
+image:
+  repository: geejowilsonk/paystream
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+
+env:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://paystream-db:5432/paystreamdb"  # Changed from host.docker.internal to k8s service name
+  SPRING_DATASOURCE_USERNAME: "postgres"
+  SPRING_DATASOURCE_PASSWORD: "postgres"
+
+postgres:
+  enabled: true
+  image: postgres
+  tag: latest
+  #container_name: paystream-db
+  service:
+    name: paystream-db
+    type: ClusterIP
+    port: 5432
+  persistence:
+    enabled: true
+    size: 1Gi
+  env:
+    POSTGRES_DB: "paystreamdb"
+    POSTGRES_USER: "postgres"
+    POSTGRES_PASSWORD: "postgres"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
